@@ -38,7 +38,6 @@ git clone https://github.com/ItsdeimosXI/Reservas-de-canchas.git
 cd Reservas-de-canchas
 ```
 
-## Instalación
  1 - Copia el archivo de entorno .env.example a .env y configura las variables necesarias.
 
 ```bash
