@@ -1,0 +1,12 @@
+Django
+dj-rest-auth
+djangorestframework
+djangorestframework-simplejwt
+gunicorn
+psycopg
+markdown
+django-filter
+django-allauth
+django-cors-headers
+dj-database-url 
+psycopg2-binary
