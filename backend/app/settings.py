@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     #Apps
     'canchas',
-    'reservas'
+    'reservas',
+    'users'
 ]
 #Rest framework config
 REST_FRAMEWORK = {
