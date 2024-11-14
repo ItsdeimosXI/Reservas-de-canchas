@@ -4,7 +4,7 @@ from .models import Canchas, Lugar
 from rest_framework import viewsets
 from rest_framework import permissions
 
-# Create your views here.
+# Create your views here.   
 class CanchaViewSet(viewsets.ModelViewSet):
     queryset = Canchas.objects.all()
     serializer_class = CanchasSerializer

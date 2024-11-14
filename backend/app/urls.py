@@ -3,11 +3,13 @@ from django.urls import path, include
 from rest_framework import routers
 from users.views import UserViewSet, RegisterViewSet
 from canchas.views import CanchaViewSet, LugarViewSet
+from reservas.views import ReservasViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
-router.register(r'Canchas', CanchaViewSet)
-router.register(r'Lugares', LugarViewSet)
+router.register(r'canchas', CanchaViewSet)
+router.register(r'lugar', LugarViewSet)
+router.register(r'reservas', ReservasViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
