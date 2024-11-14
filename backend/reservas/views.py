@@ -9,6 +9,6 @@ class ReservasViewSet(viewsets.ModelViewSet):
     serializer_class = ReservasSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+        serializer.save(usuario=self.request.user)
     def get_queryset(self):
-        return Reservas.objects.filter(user=self.request.user)
+        return Reservas.objects.filter(usuario=self.request.user)
