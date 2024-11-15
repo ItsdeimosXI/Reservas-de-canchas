@@ -27,5 +27,13 @@ services:
     volumes:
       - ./data/dbdata:/var/lib/postgresql/data:delegated
       - ./conf/postgres/:/docker-entrypoint-initdb.d/
-
+  frontend:
+      image: node:lts
+      working_dir: /app
+      ports:
+          - "5173:5173"
+      volumes:
+      - ./frontend/:/app
+      tty: true
+      command: sh -c "npm install && npm run dev"
 
