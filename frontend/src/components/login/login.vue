@@ -1,26 +1,53 @@
 <template>
-<form class="max-w-sm mx-auto">
-  <div class="mb-5">
-    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
-    <input type="email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@flowbite.com" required />
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="bg-white p-6 rounded shadow-md w-full max-w-sm">
+    <h2 class="text-2xl font-bold text-gray-700 text-center mb-6">Iniciar Sesión</h2>
+    <div class="mb-4">
+    <label class="block text-gray-700 font-bold mb-2">Nombre de usuario</label>
+    <input class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" type="text" placeholder="Username" v-model="username">
   </div>
-  <div class="mb-5">
-    <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your password</label>
-    <input type="password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+  <div class="mb-6">
+    <label class="block text-gray-700 font-bold mb-2">Contraseña</label>
+    <input type="text" placeholder="Contraseña" class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" v-model="password">
   </div>
-  <div class="flex items-start mb-5">
-    <div class="flex items-center h-5">
-      <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
+  <div class="mb-6 flex items-center">
+    <el-switch
+    v-model="rememberMe"
+    class="ml-2"
+    style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+  />
+      <label for="remember_me" class="ml-2 text-sm text-gray-700" >Recordar sesión?</label>
     </div>
-    <label for="remember" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Remember me</label>
+    <button class="px-5 py-3 bg-blue-500 text-black rounded hover:bg-blue-800" @click="login">Enviar</button>
   </div>
-  <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-</form>
-
+</div>
 </template>
 <script lang="ts" setup>
-
-
+import store from '@/stores/login';
+import { ref } from 'vue';
+import { ElMessage } from 'element-plus'
+import type { Ref } from 'vue';
+const username:Ref<string> = ref('');
+const password:Ref<string> = ref('');
+const rememberMe:Ref<boolean> = ref(false);
+const AuthUser = store();
+  const login = async () => {
+   const response = await AuthUser.login(username.value, password.value, rememberMe.value);
+    if (AuthUser.errores !== null){
+      ElMessage({
+        showClose: true,
+        duration: 5 * 1000,
+          type: 'error',
+          message: 'Error al iniciar sesion / contraseña o usuario incorrecto',
+        })
+    } else {
+      ElMessage ({
+        type: 'success',
+        message: 'Inicio de sesion correcto',
+      })
+    }
+    console.log(AuthUser.errores)
+  }
 </script>
 <style scoped>
 

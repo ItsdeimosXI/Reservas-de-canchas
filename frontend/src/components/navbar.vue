@@ -7,15 +7,17 @@
       @select="handleSelect"
     >
       <el-menu-item index="0">
+        <router-link :to="{name :  'home'} ">
         <img
         style="width: 50px"
         src="@/assets/images/logo.svg"
         alt="Element logo"
       />
+    </router-link>
       </el-menu-item>
-     
+     <router-link :to="{name :  'home'} ">
       <el-menu-item index="1">Inicio</el-menu-item>
-
+    </router-link>
       <el-menu-item index="2">Reservas de canchas</el-menu-item>
       <el-menu-item index="3">Sobre Nosotros</el-menu-item>
       <router-link :to="{name :  'login'} ">

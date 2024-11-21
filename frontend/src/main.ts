@@ -9,6 +9,10 @@ import router from './router'
 //AOS
 import AOS from 'aos'
 import 'aos/dist/aos.css'
+//axios config
+import custom_axios from './axios'
+import UserAuth from './stores/login'
+
 
 AOS.init();
 const app = createApp(App)
@@ -16,5 +20,11 @@ const app = createApp(App)
 app.use(createPinia())
 app.use(router)
 app.use(ElementPlus)
+app.use(custom_axios)
 
 app.mount('#app')
+const store = UserAuth()
+const token = localStorage.getItem('token') || sessionStorage.getItem('token')
+if (token){
+  store.token = token
+}

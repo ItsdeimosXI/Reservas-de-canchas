@@ -23,13 +23,11 @@ const UserAuth = defineStore('UserAuth', {
         // Si la autenticación es exitosa, se asigna el token al estado de la tienda
         this.token = response.data.access;
         // Si la opción 'rememberMe' es verdadera, almacena el token en localStorage
-        if (rememberMe === true) {
+        if (rememberMe == true) {
           localStorage.setItem('token', response.data.access);
         }
-
         // Limpia cualquier error previo
         this.errores = null;
-        
         // Retorna un objeto de éxito
         return { success: true };
       } catch (error) {
