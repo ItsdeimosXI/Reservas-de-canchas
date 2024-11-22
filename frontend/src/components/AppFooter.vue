@@ -1,7 +1,7 @@
 <template>
-    <footer class="bg-green-500 no-aos">
+    <footer class="bg-gray-800 no-aos">
       <!-- Sección de íconos -->
-      <div class="px-4 py-6 bg-green-700 text-center">
+      <div class="px-4 py-6 bg-gray-800 text-center">
         <div class="flex justify-center gap-6">
           <a
             href="https://github.com/ItsdeimosXI"
@@ -23,7 +23,7 @@
       </div>
   
       <!-- Sección de créditos -->
-      <div class="px-4 py-6 bg-green-700 text-center">
+      <div class="px-4 py-6 bg-gray-800 text-center">
         <span class="text-sm text-white">
           Diseño y desarrollo por 
           <a
