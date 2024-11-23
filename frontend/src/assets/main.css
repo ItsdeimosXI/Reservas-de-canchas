@@ -1,3 +1,29 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+    --color-custom-green: #70EB4A;
+    --color-custom-green-dark: #5AC93B;
+    --color-custom-green-light: #8EF16E;
+  }
+  
+  .bg-custom-green {
+    background-color: var(--color-custom-green);
+  }
+  
+  .text-custom-green {
+    color: var(--color-custom-green);
+  }
+  
+  .hover\:bg-custom-green-dark:hover {
+    background-color: var(--color-custom-green-dark);
+  }
+  
+  .focus\:ring-custom-green:focus {
+    --tw-ring-color: var(--color-custom-green);
+  }
+  
+  .focus\:border-custom-green:focus {
+    border-color: var(--color-custom-green);
+  }

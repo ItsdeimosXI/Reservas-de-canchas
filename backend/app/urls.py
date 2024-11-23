@@ -13,7 +13,7 @@ router.register(r'reservas', ReservasViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include(router.urls)),
-    path('register', RegisterViewSet.as_view(), name='register'),
+    path('register/', RegisterViewSet.as_view(), name='register'),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('api/token/', TokenObtainPairView.as_view(), name='token'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),

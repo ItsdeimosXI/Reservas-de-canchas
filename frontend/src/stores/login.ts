@@ -10,6 +10,7 @@ const UserAuth = defineStore('UserAuth', {
       errores: null as number | null, // Código de error HTTP (si ocurre uno).
       token: null as string | null, // Almacena el token de autenticación del usuario.
       user: null, // Almacena la información del usuario autenticado (aún no utilizado).
+      status : null as number | null
     }
   },
   actions: {
@@ -55,9 +56,35 @@ const UserAuth = defineStore('UserAuth', {
       this.token = null;
       localStorage.removeItem('token');
       sessionStorage.removeItem('token');
+    },
+    async register(username: string, email: string, password: string, password2: string, last_name: string, first_name: string){
+      try {
+        const response: any = await axios.post('/register/', {
+          username,
+          email,
+          password,
+          password2,
+          last_name,
+          first_name,
+        });
+        return { success: true };
+      } catch (error) {
+        const axiosError = error as AxiosError;
+
+        if (axiosError.response && axiosError.response.status >= 400){
+          this.errores = axiosError.response.status;
+          const responseData = axiosError.response.data as ErrorResponse;
+          this.mensaje = responseData.detail ?? null; // Si no hay mensaje, asigna null
+        }else {
+          // Si el error no tiene respuesta o es un error inesperado
+          this.errores = 500; // Asigna un código de error genérico (500)
+          this.mensaje = "A sucedido un error inesperado"; // Mensaje genérico de error
+        }
+        return { success: false, error: this.mensaje };
+      }
     }
   }
-});
+})
 
 // Exporta la tienda para poder usarla en otros componentes
 export default UserAuth;

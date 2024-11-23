@@ -5,24 +5,22 @@
       text-color="white"
       mode="horizontal"
       :ellipsis="false"
+      router
     >
-      <el-menu-item index="0">
-        <router-link :to="{name :  'home'} ">
+      <el-menu-item>
         <img
         style="width: 50px"
         src="@/assets/images/logo.svg"
         alt="Element logo"
       />
-    </router-link>
       </el-menu-item>
-     <router-link :to="{name :  'home'} ">
-      <el-menu-item index="1">Inicio</el-menu-item>
-    </router-link>
-      <el-menu-item index="2">Reservas de canchas</el-menu-item>
-      <el-menu-item index="3">Sobre Nosotros</el-menu-item>
-      <router-link :to="{name :  'login'} ">
-      <el-menu-item index="4">Inicio de sesion</el-menu-item>
-    </router-link>
+      <el-menu-item index="/">Inicio</el-menu-item>
+
+      <el-menu-item index="/reservas">Reservas de canchas</el-menu-item>
+      <el-menu-item index="/about">Sobre Nosotros</el-menu-item>
+
+      <el-menu-item index="/login">Inicio de sesion</el-menu-item>
+
     </el-menu>
   </template>
   
@@ -30,9 +28,6 @@
   import { ref } from 'vue'
   
   const activeIndex = ref('1')
-  const handleSelect = (key: string, keyPath: string[]) => {
-    console.log(key, keyPath)
-  }
   </script>
   
   <style>
@@ -40,6 +35,6 @@
     margin-right: auto;
   }
   router-link {
-    text-decoration: none;
+    all: unset;
   }
   </style>
