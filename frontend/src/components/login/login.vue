@@ -64,7 +64,7 @@ const rememberMe:Ref<boolean> = ref(false);
 const AuthUser = store();
   const login = async () => {
    const response = await AuthUser.login(username.value, password.value, rememberMe.value);
-    if (AuthUser.errores !== null){
+    if (!response.success){
       ElMessage({
         showClose: true,
         duration: 5 * 1000,

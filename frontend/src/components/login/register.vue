@@ -91,7 +91,7 @@ const handleSubmit = () => {
             showClose: true,
             duration: 5 * 1000,
             type: 'error',
-            message: 'Las contraseñas no coinciden',
+            message: 'Las contraseñas no coinciden'
         })
     } else {
         registro()
@@ -103,13 +103,12 @@ const handleSubmit = () => {
 }
 const registro = async () => {
         const response = await AuthUser.register(username.value, email.value, password.value, passwordConfirm.value, lastName.value, firstName.value);
-        
-        if (AuthUser.errores !== null) {
+        if (!response.success) {
             ElMessage({
                 showClose: true,
                 duration: 5 * 1000,
                 type: 'error',
-                message: 'Error al crear la cuenta intente mas tarde',
+                message: AuthUser.mensaje
             })
         } else {
             ElMessage({

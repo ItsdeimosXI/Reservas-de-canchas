@@ -71,16 +71,21 @@ const UserAuth = defineStore('UserAuth', {
       } catch (error) {
         const axiosError = error as AxiosError;
 
-        if (axiosError.response && axiosError.response.status >= 400){
+        if (axiosError.response && axiosError.response.status >= 400) {
+          const responseData = axiosError.response.data as Record<string, any>;
+          if (responseData.username) {
+              this.mensaje = 'El nombre de usuario ya está en uso.';
+          } else if (responseData.email) {
+              this.mensaje = 'El correo ya está registrado.';
+          } else {
+              this.mensaje = responseData.detail ?? 'Error desconocido.';
+          }
           this.errores = axiosError.response.status;
-          const responseData = axiosError.response.data as ErrorResponse;
-          this.mensaje = responseData.detail ?? null; // Si no hay mensaje, asigna null
-        }else {
-          // Si el error no tiene respuesta o es un error inesperado
-          this.errores = 500; // Asigna un código de error genérico (500)
-          this.mensaje = "A sucedido un error inesperado"; // Mensaje genérico de error
-        }
-        return { success: false, error: this.mensaje };
+      } else {
+          this.errores = 500;
+          this.mensaje = 'Ha ocurrido un error inesperado.';
+      }
+      return { success: false, error: this.mensaje };
       }
     }
   }
