@@ -8,9 +8,10 @@ from rest_framework import permissions
 class CanchaViewSet(viewsets.ModelViewSet):
     queryset = Canchas.objects.all()
     serializer_class = CanchasSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+    
 
 class LugarViewSet(viewsets.ModelViewSet):
     queryset = Lugar.objects.all()
     serializer_class = LugarSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly]

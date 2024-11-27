@@ -9,7 +9,6 @@ const UserAuth = defineStore('UserAuth', {
       mensaje: '' as string | null, // Mensaje de error o éxito en la autenticación.
       errores: null as number | null, // Código de error HTTP (si ocurre uno).
       token: null as string | null, // Almacena el token de autenticación del usuario.
-      user: null, // Almacena la información del usuario autenticado (aún no utilizado).
       status : null as number | null
     }
   },

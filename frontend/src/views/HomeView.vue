@@ -25,7 +25,7 @@
             </div>
             <h4 class="text-xl font-semibold mb-2">Canchas para todos</h4>
             <p>Desde canchas 5v5 hasta 11v11, tenemos el espacio perfecto para tu partido.</p>
-          </div>
+          </div>  
           <div class="text-center">
             <div class="bg-custom-green text-black rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
               <span class="text-2xl font-bold">📍</span>
@@ -49,9 +49,11 @@
       <div class="container mx-auto text-center">
         <h3 class="text-3xl font-bold mb-4">¿Listo para jugar?</h3>
         <p class="text-xl mb-8">Únete a RAPITURNO y comienza a reservar tus canchas favoritas hoy mismo.</p>
+        <router-link :to="{name: 'register'}">
         <button class="bg-custom-green text-black px-8 py-3 rounded-md text-lg font-semibold hover:bg-opacity-90 transition duration-300" data-aos="fade-up">
           Crear Cuenta Gratis
         </button>
+      </router-link>
       </div>
     </section>
 

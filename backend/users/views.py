@@ -7,6 +7,8 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.IsAuthenticated]
+    def get_queryset(self):
+        return User.objects.filter(username=self.request.user)
 
 class RegisterViewSet(generics.CreateAPIView):
     queryset = User.objects.all()
