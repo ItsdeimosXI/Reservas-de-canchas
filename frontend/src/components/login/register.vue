@@ -75,6 +75,7 @@
 <script lang="ts" setup>
 import { ElMessage } from 'element-plus';
 import { ref, type Ref } from 'vue';
+import router from '@/router';
 import store from '@/stores/login';
 const AuthUser = store();
 const username: Ref<string> = ref('')
@@ -117,6 +118,7 @@ const registro = async () => {
                 type: 'success',
                 message: 'Cuenta creada con éxito',
             })
+            router.push('/login')
         }
     }
 </script>

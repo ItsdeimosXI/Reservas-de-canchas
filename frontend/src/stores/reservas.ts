@@ -33,6 +33,25 @@ const Reservas = defineStore('Reservas', {
             return {success: false, error: this.mensaje}
         }
        
+       },
+       async GetCanchasByID(id:any){
+        try{
+        const response = await axios.get('/api/canchas/' + id + '/')
+        this.canchas = response.data;
+        return {success: true}
+        }catch(error){
+            const axiosError = error as AxiosError;
+            if (axiosError.response && axiosError.response.status >=400){
+                this.errores = axiosError.response.status
+                const responseData = axiosError.response.data as ErrorResponse;
+                this.mensaje = responseData.detail ?? null;
+            }else{
+                this.errores = 500;
+                this.mensaje = "A sucedido un error inesperado";
+            }
+            return {success: false, error: this.mensaje}
+        }
+       
        }
 
     }

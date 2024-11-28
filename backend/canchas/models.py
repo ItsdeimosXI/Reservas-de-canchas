@@ -8,6 +8,7 @@ class Canchas(models.Model):
     descripcion = models.TextField(max_length=1086)
     lugar = models.ForeignKey('Lugar', on_delete=models.CASCADE)
     tipo = models.CharField(max_length=48)
+    precio = models.IntegerField()
     def __str__(self):
         return (self.nombre)
     

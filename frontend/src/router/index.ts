@@ -2,7 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import login from '@/components/login/login.vue'
 import register from '@/components/login/register.vue'
-import reservas from '@/views/ReservasView.vue'
+import reservas from '../views/ReservasView.vue'
+import ReservasCreate from '@/views/Reservas/ReservasCreate.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -33,6 +34,11 @@ const router = createRouter({
       path: '/reservas',
       name: 'reservas',
       component: reservas,
+    },
+    {
+      path: '/reservas/crear/:id',
+      name: 'reservasCreate',
+      component: ReservasCreate,
     },
   ],
 })

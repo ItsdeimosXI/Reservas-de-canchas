@@ -76,7 +76,7 @@ const AuthUser = store();
         type: 'success',
         message: 'Inicio de sesion correcto',
       })
-      router.push('/home')
+      router.push('/reservas')
     }
     console.log(AuthUser.errores)
   }

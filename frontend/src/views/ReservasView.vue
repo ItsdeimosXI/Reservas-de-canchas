@@ -1,8 +1,7 @@
 <template>
-      <div v-loading="loading" element-loading-text="Cargando canchas..." element-loading-background="rgba(0, 0, 0, 0.8)"
-    style="width: 100%"
-    :data="canchas">
-  <div class="min-h-screen bg-gray-100">
+  <div v-loading="loading" element-loading-text="Cargando canchas..." element-loading-background="rgba(0, 0, 0, 0.8)"
+    style="width: 100%" :data="canchas">
+    <div class="min-h-screen bg-gray-100">
 
       <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <h1 class="text-3xl font-bold text-gray-900 mb-6">Reserva de Canchas</h1>
@@ -24,13 +23,18 @@
             class="bg-white overflow-hidden shadow-sm rounded-lg">
             <div class="p-6">
               <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ cancha.nombre }}</h3>
-              <p class="text-gray-600 mb-2">Lugar: {{ cancha.lugar }}</p>
+              <p class="text-gray-600 mb-2">Lugar: {{ cancha.lug }}</p>
               <p class="text-gray-600 mb-2">Tipo: {{ cancha.tipo }}</p>
-              <p class="text-gray-600 mb-4">{{ cancha.descripcion }}</p>
-              <button @click="reservarCancha(cancha)"
-                class="w-full bg-custom-green text-black font-semibold py-2 px-4 rounded-md hover:bg-custom-green-dark transition duration-300">
-                Reservar
-              </button>
+              <p class="text-gray-600 mb-2">precio: {{ cancha.precio }}</p>
+              <p class="text-gray-600 mb-4">Descripcion: {{ cancha.descripcion }}</p>
+              <router-link :to="{ path: '/reservas/crear/' + cancha.id }">
+                <button
+                  class="w-full bg-custom-green text-black font-semibold py-2 px-4 rounded-md hover:bg-custom-green-dark transition duration-300">
+
+                  Reservar
+
+                </button>
+              </router-link>
             </div>
           </div>
         </div>
@@ -42,15 +46,16 @@
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted, computed } from 'vue'
+<script setup lang="ts">
+import { ref, onMounted, computed, type Ref } from 'vue'
 import Reservas from '@/stores/reservas';
 import { ElMessage } from 'element-plus';
+import router from '@/router';
+import type ICanchas from '@/interfaces/ICanchas';
 const reservas = Reservas();
 const loading = ref(true)
-// Simulated API call
 const fetchCanchas = async () => {
-  // This would be replaced with an actual API calls
+
   const response = await reservas.GetCanchas()
   if (!response.success) {
     ElMessage({
@@ -59,25 +64,25 @@ const fetchCanchas = async () => {
       type: 'error',
       message: 'Error al ver las canchas intente nuevamente mas tarde',
     })
-    
-  } else {
+
+  } else if (reservas.canchas) {
     canchas.value = reservas.canchas
     loading.value = false
   }
 }
 
-const canchas = ref([])
-const lugarSeleccionado = ref('')
-const lugares = ref([])
+const canchas: Ref<Array<ICanchas>> = ref([]);
+const lugarSeleccionado = ref('');
+const lugares: Ref<Array<string>> = ref([]);
 
 onMounted(async () => {
-  canchas.value = await fetchCanchas()
-  lugares.value = [...new Set(canchas.value.map(cancha => cancha.lugar))]
-})
+  await fetchCanchas();
+  lugares.value = [...new Set(canchas.value.map(cancha => cancha.lug))];
+});
 
 const canchasFiltradas = computed(() => {
   if (lugarSeleccionado.value) {
-    return canchas.value.filter(cancha => cancha.lugar === lugarSeleccionado.value)
+    return canchas.value.filter(cancha => cancha.lug === lugarSeleccionado.value)
   }
   return canchas.value
 })
@@ -85,12 +90,6 @@ const canchasFiltradas = computed(() => {
 const filtrarCanchas = () => {
   // Esta función se llama cuando cambia el filtro, pero no necesita hacer nada adicional
   // ya que el cómputo de canchasFiltradas se actualiza automáticamente
-}
-
-const reservarCancha = (cancha) => {
-  // Aquí iría la lógica para reservar la cancha
-  console.log(`Reservando cancha: ${cancha.nombre} en ${cancha.lugar}`)
-  // Normalmente, aquí se abriría un modal de confirmación o se navegaría a una página de reserva
 }
 </script>
 
