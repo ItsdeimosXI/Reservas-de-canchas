@@ -50,7 +50,6 @@
 import { ref, onMounted, computed, type Ref } from 'vue'
 import Reservas from '@/stores/reservas';
 import { ElMessage } from 'element-plus';
-import router from '@/router';
 import type ICanchas from '@/interfaces/ICanchas';
 const reservas = Reservas();
 const loading = ref(true)

@@ -55,6 +55,7 @@ const UserAuth = defineStore('UserAuth', {
       this.token = null;
       localStorage.removeItem('token');
       sessionStorage.removeItem('token');
+      return { success: true };
     },
     async register(username: string, email: string, password: string, password2: string, last_name: string, first_name: string){
       try {

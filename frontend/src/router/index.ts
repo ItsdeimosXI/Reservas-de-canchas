@@ -4,6 +4,7 @@ import login from '@/components/login/login.vue'
 import register from '@/components/login/register.vue'
 import reservas from '../views/ReservasView.vue'
 import ReservasCreate from '@/views/Reservas/ReservasCreate.vue'
+import store from '@/stores/login'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -39,8 +40,18 @@ const router = createRouter({
       path: '/reservas/crear/:id',
       name: 'reservasCreate',
       component: ReservasCreate,
+      meta: { requiresAuth: true },
     },
   ],
 })
-
+router.beforeEach((to, from, next) => {
+  const auth = store()
+  const isAuth = auth.token
+  if (to.meta.requiresAuth && isAuth === null) {
+    next('/login')
+  }
+   else {
+    next()
+  }
+})
 export default router

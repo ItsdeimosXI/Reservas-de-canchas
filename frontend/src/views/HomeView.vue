@@ -8,10 +8,13 @@
       <div class="container mx-auto text-center">
         <h2 class="text-5xl font-bold mb-4">Reserva tu cancha en segundos</h2>
         <p class="text-xl mb-8">Juega en las mejores canchas de tu ciudad con RAPITURNO</p>
+        <router-link :to="{name: 'reservas'}">
         <button class="bg-black text-custom-green px-8 py-3 rounded-md text-lg font-semibold hover:bg-gray-800 transition duration-300">
           Reserva Ahora
         </button>
+      </router-link>
       </div>
+
     </header>
 
     <!-- Características -->

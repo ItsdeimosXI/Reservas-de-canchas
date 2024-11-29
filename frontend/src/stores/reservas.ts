@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
-
+import UserAuth from "./login";
 import axios, { AxiosError } from 'axios';
+import type { strict } from "assert";
 
 const Reservas = defineStore('Reservas', {
     state: () => {
@@ -52,8 +53,37 @@ const Reservas = defineStore('Reservas', {
             return {success: false, error: this.mensaje}
         }
        
-       }
-
+       },
+       async CreateReserva(id: any, HoraInicio: string, HoraFin: string, dia: string) {
+        const authStore = UserAuth()
+        const token = authStore.token
+        try {
+            const response = await axios.post('/api/reservas/', {
+                cancha_reservada: id,
+                horario_desde: HoraInicio,
+                horario_hasta: HoraFin,
+                dia: dia,
+            },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+            )
+            return { success: true }
+        } catch (error) {
+            const axiosError = error as AxiosError;
+            if (axiosError.response && axiosError.response.status >= 400) {
+                this.errores = axiosError.response.status
+                const responseData = axiosError.response.data as ErrorResponse;
+                this.mensaje = responseData.detail ?? null;
+            } else {
+                this.errores = 500;
+                this.mensaje = "A sucedido un error inesperado";
+            }
+            return { success: false, error: this.mensaje }
+        }
+    },
     }
 
 
