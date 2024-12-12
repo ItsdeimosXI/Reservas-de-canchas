@@ -1,32 +1,6 @@
 <template>
   <div class="min-h-screen bg-gray-100">
-    <el-container class="h-screen">
-      <el-aside width="250px" class="bg-gray-800 text-white">
-        <div class="p-5">
-          <h1 class="text-2xl font-bold text-custom-green mb-8">RAPITURNO</h1>
-          <el-menu background-color="#1F2937" text-color="#fff" active-text-color="#70EB4A" :default-active="'1'">
-            <el-menu-item index="1">
-              <el-icon>
-                <UserFilled />
-              </el-icon>
-              <span>Perfil</span>
-            </el-menu-item>
-            <el-menu-item index="2">
-              <el-icon>
-                <Calendar />
-              </el-icon>
-              <span>Mis usuario</span>
-            </el-menu-item>
-            <el-menu-item index="3">
-              <el-icon>
-                <Setting />
-              </el-icon>
-              <span>Configuración</span>
-            </el-menu-item>
-          </el-menu>
-        </div>
-      </el-aside>
-
+    <el-container class="h-screen"> 
       <el-container>
         <el-header class="bg-white shadow">
           <div class="flex justify-between items-center h-full">
@@ -38,14 +12,14 @@
         <el-main>
           <el-row :gutter="20">
             <el-col :span="8">
-              <el-card class="mb-4">
+              <el-card class="mb-4" v-if="Usuario.length > 0">
                 <div>
-                  <h2 class="mt-3 text-xl font-bold">{{ Usuario}}</h2>
-                  <p class="text-gray-500">{{ Usuario.email }}</p>
+                  <h2 class="mt-3 text-xl font-bold">{{Usuario[0].first_name }}</h2>
+                  <p class="text-gray-500">{{  Usuario[0].email }}</p>
                 </div>
                 <el-descriptions class="mt-4" :column="1" border>
-                  <el-descriptions-item label="Teléfono">{{ Usuario.first_name }}</el-descriptions-item>
-                  <el-descriptions-item label="Fecha de registro">{{ formatDate(Usuario.registrationDate)
+                  <el-descriptions-item label="Nombre">{{ Usuario[0].first_name}}</el-descriptions-item>
+                  <el-descriptions-item label="Apellido">{{ Usuario[0].last_name
                     }}</el-descriptions-item>
                 </el-descriptions>
                 <div class="mt-4">
