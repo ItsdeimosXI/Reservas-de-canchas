@@ -1,7 +1,6 @@
 // Importación de dependencias necesarias
 import { defineStore } from 'pinia'; // 'defineStore' se usa para definir una tienda (store) con Pinia.
 import axios, { AxiosError } from 'axios'; // 'axios' es para hacer peticiones HTTP, 'AxiosError' es para manejar errores de Axios.
-
 const UserAuth = defineStore('UserAuth', {
 
   state: () => {
@@ -9,7 +8,8 @@ const UserAuth = defineStore('UserAuth', {
       mensaje: '' as string | null, // Mensaje de error o éxito en la autenticación.
       errores: null as number | null, // Código de error HTTP (si ocurre uno).
       token: null as string | null, // Almacena el token de autenticación del usuario.
-      status : null as number | null
+      status: null as number | null,
+      user: null as Array<any> | null
     }
   },
   actions: {
@@ -18,7 +18,7 @@ const UserAuth = defineStore('UserAuth', {
         // Realiza la solicitud POST a la API para obtener el token
         const response: any = await axios.post('/api/token/', {
           username,
-          password, 
+          password,
         });
         // Si la autenticación es exitosa, se asigna el token al estado de la tienda
         this.token = response.data.access;
@@ -37,7 +37,7 @@ const UserAuth = defineStore('UserAuth', {
         // Si la respuesta del servidor tiene un error (código >= 400), maneja el error
         if (axiosError.response && axiosError.response.status >= 400) {
           this.errores = axiosError.response.status; // Almacena el código de error HTTP
-          
+
           // Extrae el mensaje de error desde la respuesta de la API (si está disponible)
           const responseData = axiosError.response.data as ErrorResponse;
           this.mensaje = responseData.detail ?? null; // Si no hay mensaje, asigna null
@@ -57,7 +57,7 @@ const UserAuth = defineStore('UserAuth', {
       sessionStorage.removeItem('token');
       return { success: true };
     },
-    async register(username: string, email: string, password: string, password2: string, last_name: string, first_name: string){
+    async register(username: string, email: string, password: string, password2: string, last_name: string, first_name: string) {
       try {
         const response: any = await axios.post('/register/', {
           username,
@@ -74,18 +74,42 @@ const UserAuth = defineStore('UserAuth', {
         if (axiosError.response && axiosError.response.status >= 400) {
           const responseData = axiosError.response.data as Record<string, any>;
           if (responseData.username) {
-              this.mensaje = 'El nombre de usuario ya está en uso.';
+            this.mensaje = 'El nombre de usuario ya está en uso.';
           } else if (responseData.email) {
-              this.mensaje = 'El correo ya está registrado.';
+            this.mensaje = 'El correo ya está registrado.';
           } else {
-              this.mensaje = responseData.detail ?? 'Error desconocido.';
+            this.mensaje = responseData.detail ?? 'Error desconocido.';
           }
           this.errores = axiosError.response.status;
-      } else {
+        } else {
           this.errores = 500;
           this.mensaje = 'Ha ocurrido un error inesperado.';
+        }
+        return { success: false, error: this.mensaje };
       }
-      return { success: false, error: this.mensaje };
+    },
+    async GetUser() {
+      try {
+        const response = await axios.get('api/users/', {
+          headers: {
+            Authorization: `Bearer ${this.token}`,
+          }
+
+        })
+        this.user = response.data.results;
+        return { success: true }
+
+      } catch (error) {
+        const axiosError = error as AxiosError;
+        if (axiosError.response && axiosError.response.status >= 400) {
+          this.errores = axiosError.response.status
+          const responseData = axiosError.response.data as ErrorResponse;
+          this.mensaje = responseData.detail ?? null;
+        } else {
+          this.errores = 500;
+          this.mensaje = "A sucedido un error inesperado";
+        }
+        return { success: false, error: this.mensaje }
       }
     }
   }

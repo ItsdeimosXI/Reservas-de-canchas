@@ -47,8 +47,7 @@ INSTALLED_APPS = [
     'users'
 ]
 #Rest framework config
-REST_FRAMEWORK = {
-    
+REST_FRAMEWORK = {   
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
         
@@ -182,7 +181,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
 LANGUAGE_CODE = 'es'
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/Argentina/Buenos_Aires'
 
 USE_I18N = True
 

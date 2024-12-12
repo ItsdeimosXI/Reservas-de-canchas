@@ -16,7 +16,7 @@
         src="https://cube.elemecdn.com/0/88/03b0d39583f48206768a7534e55bcpng.png"
       />
       </template>
-    <el-menu-item index="/profile">Perfil</el-menu-item>
+    <el-menu-item index="/perfil">Perfil</el-menu-item>
     <el-menu-item  @click="logout">Cerrar sesion</el-menu-item>
   </el-sub-menu>
   </el-menu>

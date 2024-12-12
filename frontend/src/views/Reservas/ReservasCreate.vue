@@ -153,17 +153,6 @@ const crearReserva = async () => {
     })
     router.push('/reservas')
   }
-
-  console.log('Creando reserva:', {
-    fecha: fechaReserva.value,
-    horaInicio: horaInicio.value,
-    horaFin: horaFin.value,
-    canchaId: canchaId,
-    precioTotal: precioTotal.value
-  })
-
-  ElMessage.success('Reserva creada con éxito')
-  // Aquí se podría redirigir al usuario a una página de confirmación o al listado de sus reservas
 }
 
 const cancelarReserva = () => {

@@ -5,6 +5,7 @@ import register from '@/components/login/register.vue'
 import reservas from '../views/ReservasView.vue'
 import ReservasCreate from '@/views/Reservas/ReservasCreate.vue'
 import store from '@/stores/login'
+import perfil from '@/components/login/perfil.vue'
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -40,6 +41,12 @@ const router = createRouter({
       path: '/reservas/crear/:id',
       name: 'reservasCreate',
       component: ReservasCreate,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/perfil',
+      name: 'perfil',
+      component: perfil,
       meta: { requiresAuth: true },
     },
   ],
