@@ -40,14 +40,16 @@
                     </el-button>
                   </div>
                 </template>
+                <div v-for="reservation in reservations" :key="reservation.id">
                 <el-table :data="reservations" style="width: 100%">
-                  <el-table-column prop="date" label="Fecha" width="120">
+                  <el-table-column prop="dia" label="Fecha" width="120">
                     <template #default="scope">
                       {{ formatDate(scope.row.date) }}
                     </template>
                   </el-table-column>
-                  <el-table-column prop="court" label="Cancha" width="120" />
-                  <el-table-column prop="time" label="Hora" width="120" />
+                  <el-table-column prop="cancha_reservada" label="Cancha" width="120" />
+                  <el-table-column prop="horario_desde" label="Hora" width="120" />
+                  <el-table-column prop="horario_hasta" label="Hora" width="120" />
                   <el-table-column prop="status" label="Estado">
                     <template #default="scope">
                       <el-tag :type="getStatusType(scope.row.status)">
@@ -55,6 +57,7 @@
                       </el-tag>
                     </template>
                   </el-table-column>
+                
                   <el-table-column label="Acciones" width="120">
                     <template #default="scope">
                       <el-button v-if="scope.row.status === 'Pendiente'" type="danger" size="small"
@@ -63,8 +66,11 @@
                       </el-button>
                     </template>
                   </el-table-column>
+                
                 </el-table>
+              </div>
               </el-card>
+            
             </el-col>
           </el-row>
         </el-main>
@@ -79,8 +85,11 @@ import { ElMessage } from 'element-plus'
 import { UserFilled, Calendar, Setting } from '@element-plus/icons-vue'
 import store from '@/stores/login';
 const userauth = store()
+import res from '@/stores/reservas';
+const reservas = res()
 import router from '@/router';
 import type { Ref } from 'vue';
+import type IReservas from '@/interfaces/IReservas';
 import type Iusers from '@/interfaces/IUsers';
 const Usuario: Ref<Array<Iusers>> = ref([]);
 const GetUser = async () => {
@@ -102,15 +111,25 @@ const GetUser = async () => {
 onMounted(async () => {
   await GetUser()
   console.log(Usuario.value)
+  await GetReservaciones()
+  console.log()
 })
 
-const reservations = ref([
-  { id: 1, date: new Date('2023-06-10'), court: 'Cancha A', time: '18:00 - 19:00', status: 'Completada' },
-  { id: 2, date: new Date('2023-06-15'), court: 'Cancha B', time: '20:00 - 21:00', status: 'Pendiente' },
-  { id: 3, date: new Date('2023-06-20'), court: 'Cancha C', time: '17:00 - 18:00', status: 'Cancelada' },
-  { id: 4, date: new Date('2023-06-25'), court: 'Cancha A', time: '19:00 - 20:00', status: 'Pendiente' },
-])
-
+const reservations: Ref<Array<IReservas>> = ref([])
+const GetReservaciones = async () => {
+  const response = await reservas.GetReservas()
+  if (!response.success){
+    ElMessage({
+      showClose: true,
+      duration: 5 * 1000,
+      type: 'error',
+      message: 'Error al ver sus reservas intente nuevamente mas tarde',
+    })
+  } else if (reservas.reservas_user){
+    reservations.value = reservas.reservas_user
+    console.log(reservations.value)
+}
+}
 const formatDate = (date) => {
   return new Date(date).toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' })
 }

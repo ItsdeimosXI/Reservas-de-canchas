@@ -87,7 +87,7 @@ const DescripcionCancha = ref('')
 const precio = ref('')
 const horasOcupadas = ref<string[]>([])
 const disabledDate = (time: { getTime: () => number; }) => {
-  return time.getTime() < Date.now(); // Deshabilita fechas anteriores a hoy
+  return time.getTime() < Date.now() - 86400000; // Deshabilita fechas anteriores a hoy
 }
 
 const GetCanchas = async () => {

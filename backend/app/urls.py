@@ -3,7 +3,7 @@ from django.urls import path, include
 from rest_framework import routers
 from users.views import UserViewSet, RegisterViewSet
 from canchas.views import CanchaViewSet, LugarViewSet
-from reservas.views import ReservasViewSet, GetReservasViewSet
+from reservas.views import ReservasViewSet
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)

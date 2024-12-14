@@ -17,8 +17,17 @@ class ReservasViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(usuario=self.request.user)
     @action(detail=False, methods=['get'])
-    def horas_ocupadas(self, request):
+    def reservaciones(self, request):
+        user = request.user
 
+
+        if not request.user.is_authenticated:
+            return Response({'error': 'Debe proporcionar debe estar autenticado.'}, status=400)
+        reservaciones = Reservas.objects.filter(usuario=user)
+        serializer = ReservasSerializer(reservaciones, many=True)
+        return Response(serializer.data)
+    @action(detail=False, methods=['get'])
+    def horas_ocupadas(self, request):
         fecha = request.query_params.get('fecha')
         cancha_id = request.query_params.get('cancha_id')
 
@@ -36,16 +45,13 @@ class ReservasViewSet(viewsets.ModelViewSet):
         fecha_inicio = datetime.strptime(fecha, "%Y-%m-%d").date()  
         hora_inicio = time(0, 0)  
         hora_fin = time(23, 59)  
-
         reservas = Reservas.objects.filter(
             cancha_reservada=cancha,
             dia=fecha_inicio,
             horario_desde__gte=hora_inicio,
             horario_hasta__lte=hora_fin
         )
-
-
-        
+  
         horas_ocupadas = set() 
         for reserva in reservas:
             hora_actual = datetime.combine(fecha_inicio, reserva.horario_desde)
@@ -56,9 +62,4 @@ class ReservasViewSet(viewsets.ModelViewSet):
                 hora_actual += timedelta(hours=1)
 
         return Response(sorted(list(horas_ocupadas)), status=200)
-class GetReservasViewSet(viewsets.ModelViewSet):
-    queryset = Reservas.objects.all()
-    serializer_class = ReservasSerializer
-    permission_classes = [permissions.IsAuthenticated]
-    def get_queryset(self):
-        return Reservas.objects.filter(usuario=self.request.user)
+    

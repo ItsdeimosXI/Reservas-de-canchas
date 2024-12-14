@@ -187,7 +187,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'es'
 TIME_ZONE = 'America/Argentina/Buenos_Aires'
 
@@ -195,6 +194,7 @@ USE_I18N = True
 
 USE_TZ = True
 #Debug
+"""
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -213,7 +213,7 @@ LOGGING = {
     },
 }
 
-
+"""
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
