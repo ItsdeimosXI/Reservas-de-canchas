@@ -44,7 +44,9 @@ INSTALLED_APPS = [
     #Apps
     'canchas',
     'reservas',
-    'users'
+    'users',
+    #celerys
+    'django_celery_beat'
 ]
 #Rest framework config
 REST_FRAMEWORK = {   
@@ -80,6 +82,12 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOWED_ORIGIN_REGEXES = [
     "http://localhost:5173"
 ]
+
+#Tareas programadas
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'America/Argentina/Buenos_Aires'
 
 #SLASH
 APPEND_SLASH=False
@@ -186,6 +194,24 @@ TIME_ZONE = 'America/Argentina/Buenos_Aires'
 USE_I18N = True
 
 USE_TZ = True
+#Debug
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': False,
+        },
+    },
+}
 
 
 # Static files (CSS, JavaScript, Images)

@@ -14,7 +14,7 @@
             <el-col :span="8">
               <el-card class="mb-4" v-if="Usuario.length > 0">
                 <div>
-                  <h2 class="mt-3 text-xl font-bold">{{Usuario[0].first_name }}</h2>
+                  <h2 class="mt-3 text-xl font-bold">{{Usuario[0].username }}</h2>
                   <p class="text-gray-500">{{  Usuario[0].email }}</p>
                 </div>
                 <el-descriptions class="mt-4" :column="1" border>

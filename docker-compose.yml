@@ -1,6 +1,6 @@
 services:
   django:
-    image: backend:0.1
+    image: backend:0.2
     build:
       context: ./config/django-image
     volumes:
@@ -36,4 +36,39 @@ services:
       - ./frontend/:/app
       tty: true
       command: sh -c "npm install && npm run dev"
+  redis:
+    image: redis:alpine
+    command: sh -c 'redis-server'
+    ports:
+      - 6379:6379
+  celery:
+    build:
+      context: ./config/django-image
+    command: celery -A app worker --loglevel=info  # Ajusta "backend" al nombre de tu proyecto Django
+    volumes:
+      - ./backend:/usr/src/app:delegated
+    environment:
+      DATABASE_PASS: ${DATABASE_PASS}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_HOST: ${DATABASE_HOST}
+      CELERY_BROKER_URL: redis://redis:6379/0
+    depends_on:
+      - redis
+      - django
 
+  celery_beat:
+    build:
+      context: ./config/django-image
+    command: celery -A app beat --loglevel=info
+    volumes:
+      - ./backend:/usr/src/app:delegated
+    environment:
+      DATABASE_PASS: ${DATABASE_PASS}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_HOST: ${DATABASE_HOST}
+      CELERY_BROKER_URL: redis://redis:6379/0
+    depends_on:
+      - redis
+      - django
