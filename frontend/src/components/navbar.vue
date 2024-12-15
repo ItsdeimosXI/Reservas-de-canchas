@@ -5,10 +5,8 @@
       <img style="width: 50px" src="@/assets/images/logo.svg" alt="Element logo" />
     </el-menu-item>
     <el-menu-item index="/">Inicio</el-menu-item>
-
     <el-menu-item index="/reservas">Reservas de canchas</el-menu-item>
     <el-menu-item index="/about">Sobre Nosotros</el-menu-item>
-
     <el-menu-item v-if="!IsAuth" index="/login">Inicio de sesion</el-menu-item>
     <el-sub-menu v-if="IsAuth" index="user">
       <template #title>
@@ -17,19 +15,27 @@
       />
       </template>
     <el-menu-item index="/perfil">Perfil</el-menu-item>
+    <el-menu-item v-if="superuser" index="/gestioncanchas">Gestionar canchas</el-menu-item>
     <el-menu-item  @click="logout">Cerrar sesion</el-menu-item>
   </el-sub-menu>
   </el-menu>
 </template>
 
 <script lang="ts" setup>
-import { computed, ref } from 'vue'
+import { computed, onMounted, ref, type Ref } from 'vue'
 import store from '@/stores/login';
 import router from '@/router';
 import { ElMessage } from 'element-plus';
-const activeIndex = ref('1')
+import { useRoute } from 'vue-router';
 const userauth = store()
+const route = useRoute()
 const IsAuth = computed(() => !!userauth.token)
+const activeIndex = computed(() => route.path)
+onMounted(async () => {
+  if(IsAuth.value){
+  await ObtenerUsuario()
+}
+})
 const logout = () => {
   const response = userauth.logout()
   if (!response.success){
@@ -48,8 +54,16 @@ const logout = () => {
     })
     router.push('/')
   }
-  
 }
+const superuser:Ref<Boolean> = ref(false);
+const ObtenerUsuario = async () => {
+  const response = await userauth.GetUser();
+  if (response.success) {
+    superuser.value = userauth.superuser;
+  } else {
+    superuser.value = false;
+  }
+};
 
 </script>
 

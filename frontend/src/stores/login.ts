@@ -9,6 +9,7 @@ const UserAuth = defineStore('UserAuth', {
       errores: null as number | null, // Código de error HTTP (si ocurre uno).
       token: null as string | null, // Almacena el token de autenticación del usuario.
       status: null as number | null,
+      superuser: false,
       user: null as Array<any> | null
     }
   },
@@ -97,8 +98,8 @@ const UserAuth = defineStore('UserAuth', {
 
         })
         this.user = response.data.results;
+        this.superuser = response.data.results[0].is_superuser;
         return { success: true }
-
       } catch (error) {
         const axiosError = error as AxiosError;
         if (axiosError.response && axiosError.response.status >= 400) {

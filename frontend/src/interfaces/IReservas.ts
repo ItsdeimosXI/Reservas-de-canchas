@@ -1,9 +1,8 @@
-export default interface ICanchas {
-
+export default interface IReservas {
     cancha_reservada: number
     dia: string
     horario_desde: string
     horario_hasta: string
-    id: number
+    id: any
     status: string
 }

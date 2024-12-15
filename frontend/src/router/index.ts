@@ -6,6 +6,13 @@ import reservas from '../views/ReservasView.vue'
 import ReservasCreate from '@/views/Reservas/ReservasCreate.vue'
 import store from '@/stores/login'
 import perfil from '@/components/login/perfil.vue'
+import canchas from '@/components/canchas/CreateCancha.vue'
+import GestionCanchas from '@/components/canchas/GestionCanchas.vue'
+import NotFound from '@/components/404.vue'
+const isUserAuthenticated = (): boolean => {
+  return !!localStorage.getItem('token'); // Aquí puedes verificar si el usuario tiene un token
+};
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -31,6 +38,13 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: register,
+      beforeEnter: (to, from, next) => {
+        if (isUserAuthenticated()) {
+          next('/perfil'); // Redirige al perfil si el usuario está autenticado
+        } else {
+          next(); // Permite el acceso si no está autenticado
+        }
+      },
     },
     {
       path: '/reservas',
@@ -49,7 +63,28 @@ const router = createRouter({
       component: perfil,
       meta: { requiresAuth: true },
     },
+    {
+      path: '/canchascrear',
+      name: 'canchascrear',
+      component: canchas,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/gestioncanchas',
+      name: 'gestioncanchas',
+      component: GestionCanchas,
+      meta: { requiresAuth: true },
+    },
+    {
+      path: '/:pathMatch(.*)*',
+      name: '404',
+      component: NotFound
+    }
   ],
+  scrollBehavior(to, from, savedPosition) {
+    // Siempre vuelves al top de la página al cambiar de ruta
+    return { top: 0 };
+  },
 })
 router.beforeEach((to, from, next) => {
   const auth = store()

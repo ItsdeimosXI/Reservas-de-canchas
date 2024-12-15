@@ -78,7 +78,6 @@ const AuthUser = store();
       })
       router.push('/reservas')
     }
-    console.log(AuthUser.errores)
   }
 </script>
 <style scoped>

@@ -74,7 +74,7 @@
 
 <script lang="ts" setup>
 import { ElMessage } from 'element-plus';
-import { ref, type Ref } from 'vue';
+import { onMounted, ref, type Ref } from 'vue';
 import router from '@/router';
 import store from '@/stores/login';
 const AuthUser = store();
@@ -109,7 +109,7 @@ const registro = async () => {
                 showClose: true,
                 duration: 5 * 1000,
                 type: 'error',
-                message: AuthUser.mensaje
+                message: 'error al registrarse intente de nuevo mas tarde'
             })
         } else {
             ElMessage({

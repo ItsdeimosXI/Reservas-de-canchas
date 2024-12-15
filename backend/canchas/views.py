@@ -10,7 +10,6 @@ class CanchaViewSet(viewsets.ModelViewSet):
     serializer_class = CanchasSerializer
     permission_classes = [permissions.IsAuthenticatedOrReadOnly]
     
-
 class LugarViewSet(viewsets.ModelViewSet):
     queryset = Lugar.objects.all()
     serializer_class = LugarSerializer

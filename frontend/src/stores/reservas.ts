@@ -135,10 +135,135 @@ const Reservas = defineStore('Reservas', {
             }
             return { success: false, error: this.mensaje }
         }
+    },
+    async CancelarReserva(id: any, status: string, dia: string, cancha_reservada: string, horario_desde: string, horario_hasta:string){
+        const authStore = UserAuth()
+        const token = authStore.token
+        try{
+            const response = await axios.put('/api/reservas/' + id + '/',
+                {
+                    status: status,
+                    dia: dia,
+                    cancha_reservada: cancha_reservada,
+                    horario_desde: horario_desde,
+                    horario_hasta: horario_hasta
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+            )
+            return {success: true}
+        }catch (error) {
+            const axiosError = error as AxiosError;
+            if (axiosError.response && axiosError.response.status >= 400) {
+                this.errores = axiosError.response.status
+                const responseData = axiosError.response.data as ErrorResponse;
+                this.mensaje = responseData.detail ?? null;
+            } else {
+                this.errores = 500;
+                this.mensaje = "A sucedido un error inesperado";
+            }
+            return { success: false, error: this.mensaje }
+        }
+    },
+    async EliminarCancha(id:any){
+        const authStore = UserAuth()
+        const token = authStore.token
+        try{
+            const response = await axios.delete('/api/canchas/' + id + '/',
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                }
+            )
+            return {success: true}
+        }catch (error) {
+            const axiosError = error as AxiosError;
+            if (axiosError.response && axiosError.response.status >= 400) {
+                this.errores = axiosError.response.status
+                const responseData = axiosError.response.data as ErrorResponse;
+                this.mensaje = responseData.detail ?? null;
+            } else {
+                this.errores = 500;
+                this.mensaje = "A sucedido un error inesperado";
+            }
+            return { success: false, error: this.mensaje }
+    }
+},
+    async ModificarCancha(id: any, nombre: string, numero_cancha: number, descripcion: string, tipo: string, lugar: number, precio: number
+    )
+    {
+        const authStore = UserAuth()
+        const token = authStore.token
+        try{
+            const response = await axios.put('/api/canchas/' + id + '/',
+                {
+                    nombre: nombre,
+                    numero_cancha: numero_cancha,
+                    descripcion: descripcion,
+                    tipo: tipo,
+                    lugar: lugar,
+                    precio: precio
+                }
+                ,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                })
+                return {success: true}
+        }catch (error) {
+            const axiosError = error as AxiosError;
+            if (axiosError.response && axiosError.response.status >= 400) {
+                this.errores = axiosError.response.status
+                const responseData = axiosError.response.data as ErrorResponse;
+                this.mensaje = responseData.detail ?? null;
+            } else {
+                this.errores = 500;
+                this.mensaje = "A sucedido un error inesperado";
+            }
+            return { success: false, error: this.mensaje }
+    }
+    },
+    async CrearCancha(nombre: string, numero_cancha: number, descripcion: string, tipo: string, lugar: number, precio: number
+    )
+    {
+        const authStore = UserAuth()
+        const token = authStore.token
+        try{
+            const response = await axios.post('/api/canchas/',
+                {
+                    nombre: nombre,
+                    numero_cancha: numero_cancha,
+                    descripcion: descripcion,
+                    tipo: tipo,
+                    lugar: lugar,
+                    precio: precio
+                }
+                ,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                })
+                return {success: true}
+        }catch (error) {
+            const axiosError = error as AxiosError;
+            if (axiosError.response && axiosError.response.status >= 400) {
+                this.errores = axiosError.response.status
+                const responseData = axiosError.response.data as ErrorResponse;
+                this.mensaje = responseData.detail ?? null;
+            } else {
+                this.errores = 500;
+                this.mensaje = "A sucedido un error inesperado";
+            }
+            return { success: false, error: this.mensaje }
     }
     }
-
-
+    }
 })
 export default Reservas;
 

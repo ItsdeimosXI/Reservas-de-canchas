@@ -44,7 +44,7 @@ services:
   celery:
     build:
       context: ./config/django-image
-    command: celery -A app worker --loglevel=info  # Ajusta "backend" al nombre de tu proyecto Django
+    command: celery -A app worker --loglevel=info 
     volumes:
       - ./backend:/usr/src/app:delegated
     environment:
