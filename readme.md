@@ -83,9 +83,11 @@ Reservas-de-canchas/
 ## Endpoints Principales
 A continuación se describen los endpoints principales de la API:
 ```bash
-/api/auth/: Endpoints para el registro y autenticación de usuarios.
+/api/token/: Endpoints para la autenticación de los usuarios.
+register/: Para registra usuario nuevos en la APi
 /api/canchas/: CRUD para gestionar las canchas.
 /api/reservas/: CRUD para gestionar las reservas de canchas.
+/api/lugar/: CRUD para gestionar los lugares para las canchas canchas.
 ```
 ## Licencia
 
