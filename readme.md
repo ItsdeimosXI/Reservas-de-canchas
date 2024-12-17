@@ -16,12 +16,13 @@ API desarrollada con Django Rest Framework para la gestión de reservas de canch
 - **Registro de Usuarios**: Sistema de autenticación para usuarios registrados.
 - **Gestión de Canchas**: CRUD para manejar las canchas disponibles.
 - **Gestión de Reservas**: CRUD para crear, ver y gestionar reservas de canchas.
+- - **Gestión de Lugares**: CRUD para crear, ver y gestionar Lugares para las canchas.
 
 ## Tecnologías Utilizadas
 
 - **Python** y **Django** como base del proyecto.
 - **Django Rest Framework** para la creación de la API.
-- **SQLite** como base de datos (configurable a otras bases de datos).
+- - **PostgreSQL** como base de datos principal (configurable a otras bases de datos).
 - **Docker** para el despliegue y configuración del entorno.
 - **Docker Compose** para la configuración de los servicios.
 
