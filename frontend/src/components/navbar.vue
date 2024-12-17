@@ -16,6 +16,7 @@
       </template>
     <el-menu-item index="/perfil">Perfil</el-menu-item>
     <el-menu-item v-if="!!IsSuperUser" index="/gestioncanchas">Gestionar canchas</el-menu-item>
+    <el-menu-item v-if="!!IsSuperUser" index="/gestionlugares">Gestionar Lugares</el-menu-item>
     <el-menu-item  @click="logout">Cerrar sesion</el-menu-item>
   </el-sub-menu>
   </el-menu>

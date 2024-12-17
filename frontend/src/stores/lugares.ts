@@ -55,6 +55,56 @@ const Lugares = defineStore('Lugares', {
                 }
                 return {success: false, error: this.mensaje}
             }
+        },
+        async ModificarLugar(id: any, nombre: string){
+            const authStore = UserAuth()
+            const token = authStore.token
+            try{
+                const response = await axios.put('/api/lugar/' + id + '/',{
+                    nombre: nombre,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                })
+                return {success: true}
+            }catch(error){
+                const AxiosError = error as AxiosError;
+                if (AxiosError.response && AxiosError.request.status >=400){
+                    this.errores = AxiosError.response.status
+                    const responseData = AxiosError.response.data as ErrorResponse
+                    this.mensaje = responseData.detail ?? null
+
+                }else {
+                    this.mensaje = 'A sucedido un error inesperado'
+                }
+                return {success: false, error: this.mensaje}
+            }
+        },
+        async EliminarLugar(id:any){
+            const authStore = UserAuth()
+            const token = authStore.token
+            try{
+                const response = await axios.delete('/api/lugar/' + id + '/',
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                })
+                return {success: true}
+            }catch(error){
+                const AxiosError = error as AxiosError;
+                if (AxiosError.response && AxiosError.request.status >=400){
+                    this.errores = AxiosError.response.status
+                    const responseData = AxiosError.response.data as ErrorResponse
+                    this.mensaje = responseData.detail ?? null
+
+                }else {
+                    this.mensaje = 'A sucedido un error inesperado'
+                }
+                return {success: false, error: this.mensaje}
+            }
         }
     }
 })

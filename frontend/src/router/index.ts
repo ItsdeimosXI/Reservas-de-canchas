@@ -9,7 +9,8 @@ import perfil from '@/components/login/perfil.vue'
 import canchas from '@/components/canchas/CreateCancha.vue'
 import GestionCanchas from '@/components/canchas/GestionCanchas.vue'
 import NotFound from '@/components/404.vue'
-import CreateLugar from '@/components/canchas/CreateLugar.vue'
+import CreateLugar from '@/components/lugares/CreateLugar.vue'
+import Lugares from '@/components/lugares/Lugares.vue'
 const isUserAuthenticated = (): boolean => {
   return !!localStorage.getItem('token'); // Aquí puedes verificar si el usuario tiene un token
 };
@@ -80,6 +81,12 @@ const router = createRouter({
       path: '/:pathMatch(.*)*',
       name: '404',
       component: NotFound
+    },
+    {
+      path: '/gestionlugares',
+      name: 'gestionlugares',
+      component: Lugares,
+      meta: { requiresAuth: true },
     },
     {
       path: '/crearlugar',
