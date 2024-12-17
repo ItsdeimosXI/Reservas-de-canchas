@@ -25,8 +25,6 @@ app.use(custom_axios)
 app.mount('#app')
 const store = UserAuth()
 const token = localStorage.getItem('token') || sessionStorage.getItem('token')
-const superuser = localStorage.getItem('superuser')
 if (token){
   store.token = token
-  store.superuser = superuser || false
 }

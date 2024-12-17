@@ -89,12 +89,12 @@ const Reservas = defineStore('Reservas', {
         const authStore = UserAuth()
         const token = authStore.token
         try {
-            const response = await axios.get('/api/reservas/',{
+            const response = await axios.get('/api/reservas/reservaciones/',{
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
             })
-            this.reservas_user = response.data.results;
+            this.reservas_user = response.data;
             return {success: true}
         } catch(error){
             const axiosError = error as AxiosError;
