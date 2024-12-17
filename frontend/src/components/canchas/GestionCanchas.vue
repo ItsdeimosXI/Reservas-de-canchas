@@ -6,7 +6,9 @@
         <el-button type="primary" class="mb-6 bg-custom-green hover:bg-custom-green-dark" @click="navigateToCrearCancha">
           Crear Nueva Cancha
         </el-button>
-  
+        <el-button type="primary" class="mb-6 bg-custom-green hover:bg-custom-green-dark" @click="navigatetoCrearLugar">
+          Agregar Nuevo Lugar
+        </el-button>
         <el-table
           v-loading="loading"
           :data="canchas"
@@ -200,6 +202,10 @@
   const navigateToCrearCancha = () => {
     router.push('/canchascrear')
   }
+  const navigatetoCrearLugar = () => {
+    router.push('/crearlugar')
+  }
+  
   </script>
   
   <style scoped>

@@ -15,7 +15,7 @@
       />
       </template>
     <el-menu-item index="/perfil">Perfil</el-menu-item>
-    <el-menu-item v-if="superuser" index="/gestioncanchas">Gestionar canchas</el-menu-item>
+    <el-menu-item v-if="!!IsSuperUser" index="/gestioncanchas">Gestionar canchas</el-menu-item>
     <el-menu-item  @click="logout">Cerrar sesion</el-menu-item>
   </el-sub-menu>
   </el-menu>
@@ -30,12 +30,9 @@ import { useRoute } from 'vue-router';
 const userauth = store()
 const route = useRoute()
 const IsAuth = computed(() => !!userauth.token)
+const IsSuperUser= computed(() => !!userauth.superuser)
 const activeIndex = computed(() => route.path)
-onMounted(async () => {
-  if(IsAuth.value){
-  await ObtenerUsuario()
-}
-})
+
 const logout = () => {
   const response = userauth.logout()
   if (!response.success){
@@ -55,16 +52,9 @@ const logout = () => {
     router.push('/')
   }
 }
-const superuser:Ref<Boolean> = ref(false);
 const ObtenerUsuario = async () => {
   const response = await userauth.GetUser();
-  if (response.success) {
-    superuser.value = userauth.superuser;
-  } else {
-    superuser.value = false;
-  }
 };
-
 </script>
 
 <style>

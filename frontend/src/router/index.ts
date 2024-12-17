@@ -9,6 +9,7 @@ import perfil from '@/components/login/perfil.vue'
 import canchas from '@/components/canchas/CreateCancha.vue'
 import GestionCanchas from '@/components/canchas/GestionCanchas.vue'
 import NotFound from '@/components/404.vue'
+import CreateLugar from '@/components/canchas/CreateLugar.vue'
 const isUserAuthenticated = (): boolean => {
   return !!localStorage.getItem('token'); // Aquí puedes verificar si el usuario tiene un token
 };
@@ -79,7 +80,13 @@ const router = createRouter({
       path: '/:pathMatch(.*)*',
       name: '404',
       component: NotFound
-    }
+    },
+    {
+      path: '/crearlugar',
+      name: 'crearlugar',
+      component: CreateLugar,
+      meta: { requiresAuth: true },
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     // Siempre vuelves al top de la página al cambiar de ruta

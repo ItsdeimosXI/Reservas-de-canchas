@@ -69,14 +69,21 @@ const fetchCanchas = async () => {
     loading.value = false
   }
 }
-
+import store from '@/stores/login';
+const userauth = store()
 const canchas: Ref<Array<ICanchas>> = ref([]);
 const lugarSeleccionado = ref('');
 const lugares: Ref<Array<string>> = ref([]);
-
+const IsAuth = computed(() => !!userauth.token)
+const ObtenerUsuario = async () => {
+  const response = await userauth.GetUser();
+};
 onMounted(async () => {
   await fetchCanchas();
   lugares.value = [...new Set(canchas.value.map(cancha => cancha.lug))];
+  if(userauth.token){
+    await ObtenerUsuario()
+  }
 });
 
 const canchasFiltradas = computed(() => {
